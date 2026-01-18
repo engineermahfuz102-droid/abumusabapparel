@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Abu Musab Apparel | Premium Tailoring</title>
+  <meta name="description" content="Abu Musab Apparel - Bespoke tailoring and custom fashion designs." />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="icon" href="assets/logo.png" />
+
+  <style>
+    /* --- CSS Variables --- */
+    :root {
+      --primary: #111827;       /* Very Dark Gray/Black */
+      --primary-light: #374151; /* Dark Gray */
+      --accent: #d4af37;        /* Metallic Gold */
+      --accent-hover: #b5952f;
+      --white: #ffffff;
+      --bg-light: #f3f4f6;
+      --text-main: #1f2937;
+      --border: #e5e7eb;
+      --radius: 8px;
+      --transition: all 0.3s ease;
+    }
+
+    /* --- Reset & Base --- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; color: var(--text-main); background: var(--white); line-height: 1.6; }
+    img { max-width: 100%; display: block; height: auto; }
+    ul { list-style: none; }
+    a { text-decoration: none; color: inherit; transition: var(--transition); }
+    button { cursor: pointer; font-family: inherit; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 60px 0; }
+    .text-center { text-align: center; }
+
+    /* --- Header & Logo Updates --- */
+    .navbar { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.98); border-bottom: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    
+    /* UPDATED: Increased height from 70px to 80px to fit larger logo */
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+    
+    /* UPDATED: Increased font size slightly */
+    .brand { display: flex; align-items: center; gap: 15px; font-weight: 700; font-size: 1.4rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
+    
+    /* UPDATED: Larger size, thicker border, added gold glow shadow */
+    .logo { 
+        width: 60px; 
+        height: 60px; 
+        border-radius: 50%; 
+        border: 3px solid var(--accent); 
+        object-fit: cover; 
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); /* Gold glow */
+    }
+    
+    .nav-list { display: flex; gap: 30px; }
+    .nav-link { font-weight: 500; color: var(--text-main); }
+    .nav-link:hover { color: var(--accent); }
+    
+    .menu-toggle { display: none; background: none; border: none; font-size: 24px; color: var(--primary); }
+
+    /* --- Buttons --- */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 28px; border-radius: 50px; font-weight: 600; transition: var(--transition); border: 2px solid transparent; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.5px; }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background: var(--accent); color: var(--white); }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-outline { border-color: var(--white); color: var(--white); }
+    .btn-outline:hover { background: var(--white); color: var(--primary); }
+    .btn-fb-main { background: #1877F2; color: white; width: 100%; margin-top: 10px; }
+    .btn-fb-main:hover { background: #155db5; }
+
+    /* --- Hero --- */
+    .hero { background: linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.9)), url('assets/hero-bg.jpg'); background-size: cover; background-position: center; color: var(--white); padding: 100px 0; text-align: center; }
+    
+    .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 20px; color: var(--accent); }
+    .hero p { font-size: 1.2rem; color: #e5e7eb; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+    /* --- Gallery Grid --- */
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-top: 40px; }
+    .gallery-item { position: relative; border-radius: var(--radius); overflow: hidden; height: 300px; cursor: pointer; background: #ddd; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .gallery-item:hover img { transform: scale(1.1); }
+    .gallery-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 15px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; opacity: 0; transition: 0.3s; }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    /* --- Lightbox --- */
+    .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 200; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; padding: 20px; }
+    .lightbox.active { opacity: 1; pointer-events: all; }
+    .lightbox img { max-height: 90vh; max-width: 100%; border-radius: 4px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+    .lightbox-close { position: absolute; top: 20px; right: 20px; background: var(--accent); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; font-size: 24px; cursor: pointer; }
+
+    /* --- Footer --- */
+    .footer { background: var(--primary); color: #9ca3af; padding: 40px 0; font-size: 0.9rem; text-align: center; }
+
+    /* --- Popup --- */
+    .popup { position: fixed; bottom: 20px; right: 20px; z-index: 900; background: var(--white); padding: 25px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 2px solid var(--accent); width: 340px; transform: translateY(150%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .popup.show { transform: translateY(0); }
+    .popup h3 { color: var(--primary); margin-bottom: 5px; }
+    .popup-close { position: absolute; top: 10px; right: 10px; background: transparent; border: none; font-size: 20px; color: #999; cursor: pointer; }
+
+    /* Mobile Nav */
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      /* UPDATED: Top position adjusted for new navbar height */
+      .nav-list { position: absolute; top: 80px; left: 0; width: 100%; background: var(--white); flex-direction: column; align-items: center; padding: 20px 0; gap: 20px; display: none; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+      .nav-list.active { display: flex; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="follow-popup" class="popup">
+    <button id="close-popup" class="popup-close">&times;</button>
+    <h3><i class="fa-brands fa-facebook" style="color: #1877F2;"></i> Follow Us</h3>
+    <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">Don't miss our latest styles! Join our community on Facebook.</p>
+    <a href="https://www.facebook.com/profile.php?id=61568479058943" target="_blank" class="btn btn-fb-main">
+      Go to Facebook Page
+    </a>
+  </div>
+
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <img src="assets/logo.png" alt="Logo" class="logo">
+        <span>Abu Musab Apparel</span>
+      </a>
+      <nav>
+        <button id="menu-toggle" class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#gallery" class="nav-link">Gallery</a></li>
+          <li><a href="#contact" class="btn btn-primary" style="padding: 8px 20px;">Contact Us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section id="home" class="hero">
+    <div class="container">
+      <h1>Abu Musab Apparel</h1>
+      <p>Exquisite bespoke tailoring. Traditional elegance meets modern design.</p>
+      <a href="#gallery" class="btn btn-primary">View Collection</a>
+    </div>
+  </section>
+
+  <section id="gallery" class="section">
+    <div class="container">
+      <div class="text-center" style="margin-bottom: 30px;">
+        <h2 style="font-size: 2rem; color: var(--primary);">Our Design Collection</h2>
+        <p style="color: #666;">Browse our latest work.</p>
+      </div>
+      
+      <div id="gallery-grid" class="gallery-grid"></div>
+
+    </div>
+  </section>
+
+  <footer id="contact" class="footer">
+    <div class="container">
+      <h3 style="color: var(--white); margin-bottom: 20px;">Abu Musab Apparel</h3>
+      <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 20px;">
+        <a href="https://wa.me/2348029734827" target="_blank" style="font-size: 24px; color: var(--white);"><i class="fa-brands fa-whatsapp"></i></a>
+        
+        <a href="#" style="font-size: 24px; color: var(--white);"><i class="fa-brands fa-instagram"></i></a>
+        
+        <a href="https://www.facebook.com/profile.php?id=61568479058943" target="_blank" style="font-size: 24px; color: var(--white);"><i class="fa-brands fa-facebook"></i></a>
+      </div>
+      <p>&copy; <span id="year"></span> Abu Musab Apparel. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div id="lightbox" class="lightbox">
+    <button id="lightbox-close" class="lightbox-close">&times;</button>
+    <img id="lightbox-img" src="" alt="Zoomed view">
+  </div>
+
+  <script>
+    /* =========================================
+       CONFIGURATION SECTION
+       =========================================
+    */
+    
+    // Total Images from a (1) to a (57)
+    const TOTAL_IMAGES = 57; 
+
+    // Facebook Pop-up Timer (60000 ms = 1 minute)
+    const POPUP_INTERVAL = 60000; 
+
+    /* ========================================= */
+
+    const d = document;
+    const galleryGrid = d.getElementById('gallery-grid');
+    const lightbox = d.getElementById('lightbox');
+    const lightboxImg = d.getElementById('lightbox-img');
+
+    // --- 1. Auto-Load Images ---
+    function loadImages() {
+      // Loop from 1 to 57
+      for (let i = 1; i <= TOTAL_IMAGES; i++) {
+        const card = d.createElement('figure');
+        card.className = 'gallery-item';
+        
+        // Exact name format: "a (1).jpeg"
+        const imgPath = `assets/gallery/a (${i}).jpeg`;
+        
+        card.innerHTML = `
+          <img src="${imgPath}" alt="Design ${i}" loading="lazy">
+          <div class="gallery-overlay">
+            <span>Design #${i}</span>
+          </div>
+        `;
+
+        card.addEventListener('click', () => {
+          lightboxImg.src = imgPath;
+          lightbox.classList.add('active');
+        });
+
+        galleryGrid.appendChild(card);
+      }
+    }
+
+    loadImages();
+
+    // --- 2. Lightbox Logic ---
+    d.getElementById('lightbox-close').addEventListener('click', () => {
+      lightbox.classList.remove('active');
+    });
+    lightbox.addEventListener('click', (e) => {
+      if(e.target === lightbox) lightbox.classList.remove('active');
+    });
+
+    // --- 3. Recurring Pop-up Logic ---
+    const popup = d.getElementById('follow-popup');
+    const closePopupBtn = d.getElementById('close-popup');
+
+    function showPopup() {
+      popup.classList.add('show');
+    }
+
+    function hidePopup() {
+      popup.classList.remove('show');
+    }
+
+    setTimeout(showPopup, 5000);
+    setInterval(() => {
+      showPopup();
+    }, POPUP_INTERVAL);
+
+    closePopupBtn.addEventListener('click', hidePopup);
+
+    // --- 4. Mobile Menu ---
+    const menuToggle = d.getElementById('menu-toggle');
+    const navList = d.getElementById('nav-list');
+    menuToggle.addEventListener('click', () => {
+      navList.classList.toggle('active');
+    });
+
+    d.getElementById('year').textContent = new Date().getFullYear();
+
+  </script>
+</body>
+</html>
